@@ -1,0 +1,21 @@
+requests = [98,183,37,122,14,124,65,67]
+head = 53
+
+seek = 0
+
+while len(requests) > 0:
+
+    diff = []
+
+    for r in requests:
+        diff.append(abs(head-r))
+
+    m = min(diff)
+    index = diff.index(m)
+
+    seek += m
+    head = requests[index]
+
+    requests.pop(index)
+
+print("Total Seek Time =",seek)

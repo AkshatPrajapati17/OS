@@ -1,0 +1,7 @@
+requests = [98,183,37,122,14,124,65,67]
+head = 53
+seek = 0
+for r in requests:
+    seek += abs(head - r)
+    head = r
+print("Total seek time",seek)
