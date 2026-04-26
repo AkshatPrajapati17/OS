@@ -1,0 +1,50 @@
+# SRTF Scheduling
+
+n = int(input("Enter the number of process:"))
+
+bt = []
+at = []
+
+for i in range(n):
+    at.append(int(input("Enter the arrival time:")))
+    bt.append(int(input("Enter the Burst time:")))
+
+rt=bt.copy()
+wt=[0]*n
+tat=[0]*n
+
+complete = 0
+time = 0
+
+while complete != n:
+
+    shortest = -1
+    min_rt = float('INF')
+
+    for i in range(n):
+        if at[i] <= time and rt[i] > 0 and rt[i] < min_rt:
+            min_rt = rt[i]
+            shortest = i
+
+    if shortest == -1:
+        time += 1
+        continue
+
+    rt[shortest] -= 1
+
+    if rt[shortest] == 0:
+        complete += 1
+        finish = time + 1
+        wt[shortest] = finish - bt[shortest] - at[shortest]
+
+        if wt[shortest] < 0:
+            wt[shortest] = 0
+
+    time+=1
+
+for i in range(n):
+    tat[i] = wt[i] + bt[i]
+
+print("Processes\tWT\tTAT")
+for i in range(n):
+    print("P",i+1,"\t",wt[i],"\t",tat[i])

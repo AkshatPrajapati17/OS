@@ -1,0 +1,25 @@
+import threading
+import time
+
+chopsticks = [threading.Lock() for i in range(5)]
+
+def philosopher(i):
+    
+    while True:
+        
+        print("Philosopher",i,"is thinking.")
+        time.sleep(1)
+        print("Philosopher",i,"wants to eat")
+        
+        chopsticks[i].acquire()
+        chopsticks[(i+1)%5].acquire()
+        
+        print("Philosopher",i,"is eating.")
+        time.sleep(2)
+        print("Philosopher",i," is done eating.")
+        chopsticks[i].release()
+        chopsticks[(i+1)%5].release()
+
+for i in range(5):
+    t=(threading.Thread(target=philosopher,args=(i,)))
+    t.start()

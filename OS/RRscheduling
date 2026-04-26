@@ -1,0 +1,43 @@
+# Round Robin Scheduling
+
+n = int(input("Enter number of processes: "))
+
+bt = []
+for i in range(n):
+    x = int(input("Enter Burst Time: "))
+    bt.append(x)
+
+q = int(input("Enter Time Quantum: "))
+
+rem = bt.copy()
+wt = [0]*n
+tat = [0]*n
+
+time = 0
+
+while(True):
+    done = True
+
+    for i in range(n):
+
+        if rem[i] > 0:
+            done = False
+
+            if rem[i] > q:
+                time += q
+                rem[i] -= q
+
+            else:
+                time += rem[i]
+                wt[i] = time - bt[i]
+                rem[i] = 0
+
+    if done == True:
+        break
+
+for i in range(n):
+    tat[i] = bt[i] + wt[i]
+
+print("\nProcess\tBT\tWT\tTAT")
+for i in range(n):
+    print("P",i+1,"\t",bt[i],"\t",wt[i],"\t",tat[i])

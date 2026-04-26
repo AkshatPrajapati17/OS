@@ -1,0 +1,50 @@
+processes = 5
+
+available = [3,3,2]
+
+maxm = [
+[7,5,3],
+[3,2,2],
+[9,0,2],
+[2,2,2],
+[4,3,3]
+]
+
+allot = [
+[0,1,0],
+[2,0,0],
+[3,0,2],
+[2,1,1],
+[0,0,2]
+]
+
+need=[]
+
+for i in range(processes):
+    row = []
+    for j in range(3):
+        row.append(maxm[i][j]-allot[i][j])
+    need.append(row)
+
+finish = [False]*processes
+safeseq = []
+
+while len(safeseq)<processes:
+    found = False
+    
+    for p in range(processes):
+        if finish[p] == False:
+            if all(need[p][j]<=available[j] for j in range(3)):
+                
+                for k in range(3):
+                    available[k]+=allot[p][k]
+                safeseq.append(p)
+                finish[p]=True
+                found = True
+                
+    if found == False:
+        print("Sequence is not safe")
+        break
+    
+print("The Safe Sequence is")
+print(safeseq)

@@ -1,0 +1,22 @@
+pages = [7,0,1,2,0,3,0,4]
+frames=[]
+capacity=3
+fault = 0
+
+for i in range(len(pages)):
+    
+    if pages[i] not in frames:
+        fault+=1
+        if len(frames)<capacity:
+            frames.append(pages[i])
+        else:
+            future=[]
+            for f in frames:
+                if f in pages[i+1:]:
+                    future.append(pages[i+1:].index(f))
+                else:
+                    future.append(999)
+            idx = future.index(max(future))
+            frames[idx]=pages[i]
+    print(frames)
+print("Page fault:",fault)
